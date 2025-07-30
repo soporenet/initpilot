@@ -1,0 +1,145 @@
+{
+  "wlsdomain": {
+    "name": "TestDomain2",
+    "wl_home": "/u01/oracle/products/wls1412",
+    "home": "/u01/oracle/products/wls1412/user_projects/domains/TestDomain2",
+    "components": {
+      "AdminServer": {
+        "AS": {
+          "type": "AdminServer",
+          "port": 18001,
+          "ssl_enabled": false,
+          "listen_address": "lnxwls1.sopore.net",
+          "start_script": "startWebLogic.sh",
+          "start_script_path": ".",
+          "stop_script": "stopWebLogic.sh",
+          "stop_script_path": "bin",
+          "enabled": true
+        }
+      },
+      "ManagedServer": {
+        "MS1": {
+          "type": "ManagedServer",
+          "port": 18003,
+          "ssl_enabled": false,
+          "listen_address": "lnxwls1.sopore.net",
+          "start_script": "startManagedWebLogic.sh",
+          "start_script_path": "bin",
+          "stop_script": "stopManagedWebLogic.sh",
+          "stop_script_path": "bin",
+          "enabled": true
+        },
+        "MS2": {
+          "type": "ManagedServer",
+          "port": 18004,
+          "ssl_enabled": false,
+          "listen_address": "lnxwls1.sopore.net",
+          "start_script": "startManagedWebLogic.sh",
+          "start_script_path": "bin",
+          "stop_script": "stopManagedWebLogic.sh",
+          "stop_script_path": "bin",
+          "enabled": true
+        },
+        "MS3": {
+          "type": "ManagedServer",
+          "port": 18005,
+          "ssl_enabled": false,
+          "listen_address": "lnxwls2.sopore.net",
+          "start_script": "startManagedWebLogic.sh",
+          "start_script_path": "bin",
+          "stop_script": "stopManagedWebLogic.sh",
+          "stop_script_path": "bin",
+          "enabled": true
+        },
+        "MS4": {
+          "type": "ManagedServer",
+          "port": 18006,
+          "ssl_enabled": false,
+          "listen_address": "lnxwls2.sopore.net",
+          "start_script": "startManagedWebLogic.sh",
+          "start_script_path": "bin",
+          "stop_script": "stopManagedWebLogic.sh",
+          "stop_script_path": "bin",
+          "enabled": true
+        },
+        "MS5": {
+          "type": "ManagedServer",
+          "port": 18007,
+          "ssl_enabled": false,
+          "listen_address": "lnxwls2.sopore.net",
+          "start_script": "startManagedWebLogic.sh",
+          "start_script_path": "bin",
+          "stop_script": "stopManagedWebLogic.sh",
+          "stop_script_path": "bin",
+          "enabled": true
+        }
+      },
+      "NodeManager": {
+        "NM1": {
+          "type": "NodeManager",
+          "host_id": "lnxwls1.sopore.net",
+          "port": 15556,
+          "listen_address": "lnxwls1.sopore.net",
+          "ssl_enabled": false,
+          "start_script": "startNodeManager.sh",
+          "start_script_path": "bin",
+          "stop_script": "stopNodeManager.sh",
+          "stop_script_path": "bin",
+          "pid_file": "nodemanager/nodemanager.process.id",
+          "enabled": true
+        },
+        "NM2": {
+          "type": "NodeManager",
+          "host_id": "lnxwls2.sopore.net",
+          "port": 15556,
+          "listen_address": "lnxwls2.sopore.net",
+          "ssl_enabled": false,
+          "start_script": "startNodeManager.sh",
+          "start_script_path": "bin",
+          "stop_script": "stopNodeManager.sh",
+          "stop_script_path": "bin",
+          "pid_file": "nodemanager/nodemanager.process.id",
+          "enabled": true
+        }
+      }
+    },
+    "servers": {
+      "lnxwls1.sopore.net": {
+        "component_list": ["NM1", "AS", "MS1", "MS2"],
+        "component_start_order": ["NM1", "AS", "MS1", "MS2"],
+        "component_stop_order": ["MS2", "MS1", "NM1", "AS"]
+      },
+      "lnxwls2.sopore.net": {
+        "component_list": ["NM2", "MS3", "MS4", "MS5"],
+        "component_start_order": ["NM2", "MS3", "MS4", "MS5"],
+        "component_stop_order": ["MS5", "MS4", "MS3", "NM2"]
+      }
+    },
+    "Control": {
+      "timeouts": {
+        "process_start": 120,
+        "process_stop": 120,
+        "tcpport_connect": 10,
+        "wlst_connect": 10
+      },
+      "wait_times": {
+        "next_process_startup": 5,
+        "next_health_enquiry": 5
+      }
+    },
+    "Security": {
+      "trust_jks_file": "/u01/oracle/products/wls1412/user_projects/domains/TestDomain2/initpilot/wls-service-truststore.jks",
+      "trust_jks_password": "changeit",
+      "monitor_user_config": "/home/oracle/wls-monitor.config",
+      "monitor_user_key": "/home/oracle/wls-monitor.key",
+      "nm_user_config": "/home/oracle/wls-nm.config",
+      "nm_user_key": "/home/oracle/wls-nm.key",
+      "os_user": "oracle",
+      "os_group": "oinstall"
+    },
+    "Logging": {
+      "log_file_dir": "/u01/oracle/products/wls1412/user_projects/domains/TestDomain2/initpilot/logs",
+      "log_rec_item_sep": "|"
+    }
+  }
+}
